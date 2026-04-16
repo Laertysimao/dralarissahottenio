@@ -304,6 +304,17 @@
 
     .carousel-dot.active { opacity: 1; width: 22px; border-radius: 3px; }
 
+    .carousel-arrows { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
+    .carousel-arrow {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--white); border: 1px solid var(--gold-light);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--gold); transition: all 0.3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .carousel-arrow:active { background: var(--gold); color: var(--white); }
+    .carousel-arrow svg { width: 18px; height: 18px; }
+
     /* ===== DIFFERENTIALS ===== */
     .differentials {
       padding: 4.5rem 1.5rem;
@@ -877,6 +888,20 @@
     carousel.addEventListener('touchend', () => setTimeout(startAuto, 4000), { passive: true });
     cDots.forEach((d, i) => d.addEventListener('click', () => { stopAuto(); goTo(i); setTimeout(startAuto, 4000); }));
     startAuto();
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      stopAuto();
+      curSlide = Math.max(0, Math.round(carousel.scrollLeft / sw()) - 1);
+      goTo(curSlide);
+      setTimeout(startAuto, 4000);
+    });
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      stopAuto();
+      curSlide = Math.round(carousel.scrollLeft / sw()) + 1;
+      if (curSlide >= cSlides.length) curSlide = 0;
+      goTo(curSlide);
+      setTimeout(startAuto, 4000);
+    });
   </script>
 
 </body>
